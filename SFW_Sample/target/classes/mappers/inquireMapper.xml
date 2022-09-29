@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="inquire">
+
+	<insert id="insertInquire">
+		INSERT INTO inquire(email, question)
+		VALUES(#{email},
+		#{question})
+	</insert>
+
+	<select id="myinquire" resultType="InquireDTO">
+		SELECT *
+		FROM inquire
+		WHERE
+		email = #{email}
+	</select>
+
+	<select id="allinquire" resultType="InquireDTO">
+		SELECT *
+		FROM inquire
+	</select>
+
+	<update id="answer">
+		UPDATE inquire set answer = #{answer}
+		WHERE idx =
+		#{idx}
+	</update>
+
+	<select id="nullinquire" resultType="InquireDTO">
+		SELECT *
+		FROM inquire
+		WHERE answer IS null
+	</select>
+
+</mapper>

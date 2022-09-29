@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="regist">
+
+	<insert id="insert">
+		INSERT INTO regist(email, name,pay)
+		VALUES(#{email}, #{name},0)
+	</insert>
+	
+	<update id="regist">
+		UPDATE regist 
+		set pay = pay + #{pay}, slct = #{slct} 
+		WHERE email = #{email}
+	</update>
+	
+	<update id="start">
+		UPDATE regist 
+		set registday = NOW()
+		WHERE email =#{email}
+	</update>
+	
+	<update id="end">
+		update regist 
+		set expiration = DATE_ADD((SELECT registday FROM regist WHERE email = #{email}), 
+		INTERVAL (SELECT slct FROM regist WHERE email = #{email}) Month)
+		where email = #{email} 
+	</update>
+	
+	<!--남은일수  -->
+	<select id="remainingday" resultType="RegistDTO">
+		SELECT *
+		FROM regist
+		WHERE email = #{email} 
+	</select>
+		
+</mapper>
